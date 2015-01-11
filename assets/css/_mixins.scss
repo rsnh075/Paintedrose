@@ -1,0 +1,75 @@
+@mixin font-size($font-size: 16, $line-height: 0){
+    font-size : #{$font-size / 1px}px;
+    font-size : #{($font-size / 1px) / ($basefontsize / 1px) }rem;
+    @if $line-height  == 0 {} @else {
+        line-height: $baselineheight * $line-height;
+        line-height: #{($baselineheight * $line-height) / $basefontsize}rem;
+    }
+}
+
+
+$palm-end:              $lap-start - 1px;
+$lap-end:               $desk-start - 1px;
+
+
+@mixin media-query($media-query){
+
+    @if $media-query == palm{
+
+        @media only screen and (min-width:$palm-end) { @content; }
+
+    }
+
+    @if $media-query == lap {
+
+        @media only screen and (min-width:$lap-start) { @content; }
+
+    }
+
+    @if $media-query == portable{
+
+        @media only screen and (min-width:$lap-end) { @content; }
+
+    }
+
+    @if $media-query == desk{
+
+        @media only screen and (min-width:$desk-start) { @content; }
+
+    }
+
+    @if $media-query == desk-wide{
+
+        @media only screen and (min-width: $desk-wide-start) { @content; }
+
+    }
+
+}
+
+/* handles the prefixes for keyframes and animation */
+
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes $animation-name {
+    @content;
+  }
+  @-moz-keyframes $animation-name {
+    @content;
+  }  
+  @-ms-keyframes $animation-name {
+    @content;
+  }
+  @-o-keyframes $animation-name {
+    @content;
+  }  
+  @keyframes $animation-name {
+    @content;
+  }
+}
+
+@mixin animation($str) {
+  -webkit-animation: #{$str};
+  -moz-animation: #{$str};
+  -ms-animation: #{$str};
+  -o-animation: #{$str};
+  animation: #{$str};      
+}

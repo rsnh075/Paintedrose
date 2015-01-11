@@ -1,0 +1,29 @@
+/* slide in as you scroll down boxes */
+
+.come-in {
+  @include transform( translateY(0) );
+  @include transition( transform 0.8s cubic-bezier(0.645,.045,.095,1.08) );
+}
+.come-in:nth-child(odd) {
+  @include transition( 0.5s );
+}
+.already-visible {
+  @include transform( translateY(0) );
+  @include transition( none );
+}
+section { overflow: hidden; }
+
+/* beat animation for portfolio items */
+
+@include keyframes(slide-down) {
+  0% { @include transform( scale(1,1) ); }
+  50% { @include transform( scale(1.03,1.03) ); }
+  100% { @include transform( scale(1,1) ); }
+}
+
+.portfolio-items li:nth-child(even) img {
+	@include animation('slide-down 3s infinite');
+}
+.portfolio-items li:nth-child(odd) img {
+	@include animation('slide-down 3s 1.5s infinite');
+}

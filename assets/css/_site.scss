@@ -1,0 +1,448 @@
+body { transform: translate3d(0,0,0); } /* does nothing except make transitions run smoother cause of accessing computers hardware */
+
+html {
+	background : $bodycolor;
+	font-size : (100 / 16 ) * ($basefontsize / 1px) + 0%;
+	line-height: $baselineheight / $basefontsize;
+	-webkit-overflow-scrolling : touch;
+	-webkit-tap-highlight-color : rgba(255,255,255,0);
+	-webkit-text-size-adjust : 100%;
+	-ms-text-size-adjust : 100%;
+  }
+  @include media-query(lap) { html { font-size: (100 / 16 ) * (($basefontsize * 1.6) / 1px) + 0%; } 
+}
+
+.container, .container-collapsed, .container-medium { 
+  max-width: 1300px; 
+  margin: 0 auto; 
+  padding: $baselineheight $baselineheight/1.5;
+  }
+
+@include media-query(lap) { 
+  .container, .container-medium { 
+    width: 90%;
+    margin:0 auto; 
+    padding: $baselineheight * 1.5 0;
+  }
+}
+
+@include media-query(desk) {
+  .container, .container-collapsed, .container-medium {
+    width: 80%;
+    padding: $baselineheight * 3 0;
+  }
+}
+
+.container-collapsed {
+  padding:0;
+}
+
+ .container-medium {
+  padding: $baselineheight/4 $baselineheight;
+ }
+
+.container-small { 
+  max-width: 1300px; 
+  margin: 0 auto; 
+  padding: $baselineheight/2 $baselineheight/1.5; 
+  -webkit-animation-duration: 0.5s;
+  }
+
+@include media-query(lap) {
+  .container-small { 
+    width: 90%;
+    margin:0 auto; 
+    padding: $baselineheight/2 0;
+  }
+}
+
+@include media-query(desk) {
+  .container-small {
+    width: 100%;
+    padding: $baselineheight $baselineheight*2;
+  }
+}
+
+.top-content {  
+	background: darken($neutralcolor, 5%);
+}
+
+#header-part {
+	background: darken($neutralcolor, 10%);
+}
+
+#footer-part {
+	background: $neutralcolor;
+}
+
+img {
+	max-width:100%;
+}
+
+/* ========= Preloader ======== */
+
+.preloader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  background: url(logo.jpg) no-repeat #fff center center;
+  visibility: visible;
+  @include transition(all 1s 1s cubic-bezier(0.645,.045,.095,1.08));
+}
+
+.preloader.loaded {
+  top: -100%;
+  visibility: hidden;
+}
+
+/* NAVIGATIE
+================================================================================ */
+
+
+.menu-wrapper {
+  padding-top: 40px;
+  cursor: pointer;
+  overflow: hidden;
+  @include transition(padding 0.5s);
+  @include media-query(desk) {
+    padding-top: 0px;
+    cursor: hand;
+  }
+}
+
+nav.menu {
+  position: relative; // for positioning before after and menu elements
+  background: $bodycolor;
+  height: 5px; // height width for menu icon
+  width: 35px;
+  padding: 0;
+  margin-left: 5%;
+  margin-bottom: 16px;
+  @include transition(all 0.5s 0.3s, margin 0.5s 0s);
+  @include media-query(desk) {
+    background: darken($neutralcolor, 10%);
+    height: auto;
+    width: auto;
+    margin: 0;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    overflow: hidden;
+    @include transition(opacity 0.5s 0.3s);
+    @include media-query(desk) {
+      opacity: 1;
+    }
+    li {
+      visibility: hidden;
+      @include media-query(desk) {
+        display: inline-block;
+        visibility: visible;
+        background: $bodycolor;
+        box-shadow: 1px 0px 0px 0px darken($neutralcolor, 5%);
+      }
+      a {
+        color: lighten($textcolor, 10%);
+        display: block;
+        text-decoration: none;
+        @include transition(all 0.3s 0s);
+
+        &:hover,
+        &:focus,
+        &.active {
+          background: lighten($colorattention, 5%);
+          color: $neutralcolor;
+        }
+        &.current {
+          color: lighten($textcolor, 15%);
+          background: darken($neutralcolor, 5%);
+        }
+      }
+    }
+  }
+  &:before,
+  &:after {
+    content: '';
+    height: 5px;
+    width: 35px;
+    background: white;
+    display: block;
+    position: absolute;
+    @include transition(all 0.5s);
+    @include media-query(desk) {
+      display: none;
+    }
+  }
+  &:before {
+    top: -10px;
+  }
+  &:after {
+    top: -20px;
+  }
+}
+
+// -------------------- Active state 
+
+.menu-active {
+  .menu-wrapper {
+    padding-top: 0px;
+  }
+  nav.menu {
+      width: 100%;
+      margin-top: 50px;
+      margin-left: 0;
+      margin-bottom: 1px;
+      @include media-query(desk) {
+        margin-bottom: 0;
+      }
+      height: 3*48px;
+      @include media-query(lap) {
+      height: 3*62px;
+      }
+      @include transition(all 0.5s 0.3s, margin 0.5s 0s);
+      @include media-query(desk) {
+        margin-top: 0;
+        height: auto;
+        width: auto;
+      }
+      ul {
+        opacity: 1;
+        @include transition(opacity 0.5s 0s);
+        li {
+          visibility: visible;
+          box-shadow: 0px 1px 0px 0px darken($neutralcolor, 5%);
+          @include media-query(desk) {
+            box-shadow: 1px 0px 0px 0px darken($neutralcolor, 5%);
+          }
+        }
+      }
+      &:before,
+      &:after {
+        top: -20px;
+        left: 95%;
+        right: 0;
+        width: 25px;
+        margin-left: -25px;
+      }
+      &:before {
+        @include transform(rotateZ(45deg));
+      }
+      &:after {
+        @include transform(rotateZ(-45deg));
+      }
+    }
+ }
+
+
+/* PORTFOLIO ITEMS
+================================================================================ */
+.portfolio-items li * { display: block; }
+
+.portfolio-items li { display: inline-block; }
+
+.portfolio-items {
+	list-style: none;
+	margin:0;
+	padding:0;
+	text-align: center;
+}
+.portfolio-items figure {
+  border: 1px solid #fff;
+}
+.portfolio-items a {
+  border: 1px solid #fff;
+  &:hover {
+    @include transition(all 0.6s);
+    border: 1px solid $colorattention;
+  }
+}
+
+// -------------- IMG Caption
+
+figure {
+  position: relative;
+  overflow: hidden;
+}
+figcaption {
+  position: absolute;
+  background: $mediumcolor;
+  background: rgba(0,0,0,0.75);
+  color: white;
+  padding: $basefontsize/2 $basefontsize;
+  opacity: 0;
+  @include transition (all .5s ease);
+}
+figure:hover figcaption {
+  opacity: 1;
+}
+figure:active figcaption {
+  opacity: 0;
+}
+figure:before {
+  content: "<";
+  position: absolute;
+  background: $neutralcolor1;
+  color: $textcolor;
+  width: $baselineheight * 2;
+  height: $baselineheight * 2;
+  text-align: center;
+  font-size: $basefontsize;
+  line-height: $baselineheight * 2;
+  @include transition (all .6s ease);
+  opacity: 1;
+  z-index: 100;
+}
+figure:hover:before {
+  opacity: 0;
+}
+figure:active:before {
+  opacity: 1;
+}
+
+.cap-left:before {  bottom: 10px; left: 10px; }
+.cap-left figcaption { bottom: 0; left: -30%; }
+.cap-left:hover figcaption { left: 0; }
+
+.cap-right:before { top: 0; right: 0; }
+.cap-right figcaption { top: 0; right: -30%; }
+.cap-right:hover figcaption { right: 0; }
+
+.cap-top:before { top: 10px; left: 10px; }
+.cap-top figcaption { left: 0; top: -30%; }
+.cap-top:hover figcaption { top: 0; }
+
+.cap-bot:before { bottom: 10px; left: 10px; }
+.cap-bot figcaption { left: 0; bottom: -30%;}
+.cap-bot:hover figcaption { bottom: 0; }
+
+/* PORTFOLIO slide in as you scroll down
+================================================================================ */
+
+.module {
+  position: relative;
+  @include transform-origin(center center);
+  &.off-screen-top{
+    @include transform(translateY(-150px));
+  }
+  &.off-screen-bottom{
+    @include transform(translateY(150px));
+  }
+}
+
+/* PORTFOLIO NAVBAR
+================================================================================ */
+
+.navbar {
+  display: block;
+  overflow: hidden;
+  @extend .cf;
+  @include transition (all .6s ease);
+}
+
+.navbar a {
+  display: block;
+  height: $baselineheight * 4;
+  @include media-query(palm) { height: $baselineheight * 8; }
+  @include media-query(desk) { height: $baselineheight * 8; }
+}
+
+.navbar a img {
+  opacity: 0;
+  @include transition (all .6s ease);
+}
+
+.navbar .prev-project {
+  &:hover {
+    background: $neutralcolor1;
+    @include transition (all .6s ease);
+    img {
+      opacity: 1;
+      @include transform(matrix(1, 0, 0, 1, -10, -10));
+    }
+  }
+}
+
+.navbar .next-project {
+  &:hover {
+    background: $textcolor;
+    @include transition (all .6s ease);
+    img {
+      opacity: 1;
+      @include transform(matrix(1, 0, 0, 1, 10, -10));
+    }
+  }
+}
+
+.col1 {
+  position: relative;
+  float: left;
+  width: 50%;
+  min-height: 1px;
+  img {
+    display: block;
+    position: absolute;
+    right: 0px; left: auto; bottom: 0px;
+    max-width: 50%;
+    @include transform(matrix(1, 0, 0, 1, -300, -10));
+  }
+  span {
+    top: 0; left: 0;
+    background: $neutralcolor1;
+    color: $textcolor;
+  }
+}
+
+.col2 {
+  position: relative;
+  float: left;
+  width: 50%;
+  min-height: 1px;
+  img { 
+    display: block;
+    position: absolute;
+    left: 0; right: auto; bottom: 0px;
+    max-width: 50%;
+    @include transform(matrix(1, 0, 0, 1, 300, -10));
+  }
+  .next-project span {
+    top: 0; right: 0;
+    background: $textcolor;
+    color: $neutralcolor1;
+  }
+}
+
+.navbar a:hover {
+  img {
+    opacity: 1;
+  }
+}
+
+.navbar span {
+  position: absolute;
+  width: $baselineheight * 2;
+  height: $baselineheight * 2;
+  text-align: center;
+  font-size: $basefontsize;
+  line-height: $baselineheight * 2;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+    &:after,
+    &:before {
+    	content: " "; /* 1 */
+    	display: table; /* 2 */
+    }
+    &:after {
+    	clear: both;
+    }
+}
